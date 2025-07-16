@@ -30,3 +30,6 @@ body {
 #history ul li {
 	cursor: pointer;
 }
+#calc-result {
+	display: none !important;
+}

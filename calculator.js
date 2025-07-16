@@ -107,17 +107,18 @@ const calculate = () => {
 };
 
 // 결과 표시 (수식 아래)
-// function showResult(result) {
-// let resultDiv = document.getElementById("calc-result");
-// if (!resultDiv) {
-//     resultDiv = document.createElement("div");
-//     resultDiv.id = "calc-result";
-//     resultDiv.className = "alert alert-info mt-2";
-//     const display = document.getElementById("display");
-//     display.parentNode.insertBefore(resultDiv, display.nextSibling);
-// }
-// resultDiv.textContent = `결과: ${result}`;
-// }
+function showResult(result) {
+	let resultDiv = document.getElementById("calc-result");
+	if (!resultDiv) {
+		resultDiv = document.createElement("div");
+		resultDiv.id = "calc-result";
+		resultDiv.className = "alert alert-info mt-2";
+		const display = document.getElementById("display");
+		display.parentNode.insertBefore(resultDiv, display.nextSibling);
+	}
+	resultDiv.className = "alert alert-info mt-2";
+	resultDiv.textContent = `결과: ${result}`;
+}
 
 // 에러 메시지 표시
 const showError = (message) => {
