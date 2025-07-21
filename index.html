@@ -12,17 +12,22 @@
 			crossorigin="anonymous"
 		/>
 		<link rel="stylesheet" href="styles.css" />
+		<!-- 스타일 시트는 여기에! -->
 	</head>
 	<body>
-		<div class="container calculator-container">
+		<div class="container calculator-container p-4 mt-5 rounded shadow">
 			<h1 class="text-center mb-4">계산기 서비스</h1>
 			<div id="display" class="form-control">0</div>
+			<!-- 여기! 결과 및 에러 메시지 표시 영역 추가 -->
+			<div id="result" class="d-none alert"></div>
+
 			<div class="row g-2">
-				<!-- 숫자 버튼 -->
+				<!-- 숫자 버튼 (data-value와 data-type 사용) -->
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('7')"
+						data-value="7"
+						data-type="number"
 					>
 						7
 					</button>
@@ -30,7 +35,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('8')"
+						data-value="8"
+						data-type="number"
 					>
 						8
 					</button>
@@ -38,7 +44,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('9')"
+						data-value="9"
+						data-type="number"
 					>
 						9
 					</button>
@@ -46,7 +53,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-warning calc-btn w-100"
-						onclick="setOperator('/')"
+						data-value="/"
+						data-type="operator"
 					>
 						÷
 					</button>
@@ -54,7 +62,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('4')"
+						data-value="4"
+						data-type="number"
 					>
 						4
 					</button>
@@ -62,7 +71,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('5')"
+						data-value="5"
+						data-type="number"
 					>
 						5
 					</button>
@@ -70,7 +80,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('6')"
+						data-value="6"
+						data-type="number"
 					>
 						6
 					</button>
@@ -78,7 +89,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-warning calc-btn w-100"
-						onclick="setOperator('*')"
+						data-value="*"
+						data-type="operator"
 					>
 						×
 					</button>
@@ -86,7 +98,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('1')"
+						data-value="1"
+						data-type="number"
 					>
 						1
 					</button>
@@ -94,7 +107,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('2')"
+						data-value="2"
+						data-type="number"
 					>
 						2
 					</button>
@@ -102,7 +116,8 @@
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('3')"
+						data-value="3"
+						data-type="number"
 					>
 						3
 					</button>
@@ -110,49 +125,77 @@
 				<div class="col-3">
 					<button
 						class="btn btn-warning calc-btn w-100"
-						onclick="setOperator('-')"
+						data-value="-"
+						data-type="operator"
 					>
 						-
 					</button>
 				</div>
+				<!-- 하단 버튼들: Clear, 0, 소수점, 등호, 백스페이스, + -->
 				<div class="col-3">
-					<button
-						class="btn btn-danger calc-btn w-100"
-						onclick="clearDisplay()"
-					>
+					<button class="btn btn-danger calc-btn w-100" data-type="clear">
 						C
 					</button>
 				</div>
 				<div class="col-3">
 					<button
 						class="btn btn-secondary calc-btn w-100"
-						onclick="appendNumber('0')"
+						data-value="0"
+						data-type="number"
 					>
 						0
 					</button>
 				</div>
-
 				<div class="col-3">
-					<button class="btn btn-primary calc-btn w-100" onclick="calculate()">
-						=
+					<button
+						class="btn btn-secondary calc-btn w-100"
+						data-value="."
+						data-type="number"
+					>
+						.
 					</button>
 				</div>
 				<div class="col-3">
 					<button
 						class="btn btn-warning calc-btn w-100"
-						onclick="setOperator('+')"
+						data-value="+"
+						data-type="operator"
 					>
 						+
 					</button>
 				</div>
+				<!-- 등호 (=)와 백스페이스 (←) 버튼 - 가로 2칸 또는 3칸 활용 예시 -->
+				<div class="col-6">
+					<!-- 가로로 2칸 차지 -->
+					<button class="btn btn-primary calc-btn w-100" data-type="equals">
+						=
+					</button>
+				</div>
+				<div class="col-6">
+					<!-- 가로로 2칸 차지 -->
+					<button class="btn btn-info calc-btn w-100" data-type="backspace">
+						←
+					</button>
+				</div>
 			</div>
-			<div id="history"></div>
+			<div
+				id="history"
+				class="mt-4 p-3 border rounded bg-light text-secondary d-none"
+			>
+				<h5 class="text-center">계산 기록</h5>
+				<ul id="history-list" class="list-unstyled">
+					<!-- 기록이 여기에 추가됨 -->
+				</ul>
+			</div>
 		</div>
+
+		<!-- 자바스크립트 파일 -->
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 			crossorigin="anonymous"
 		></script>
-		<script src="calculator.js"></script>
+		<!-- 다른 모듈들은 main.js에서 import되므로 여기에 개별적으로 또 link하지 마세요! -->
+		<script type="module" src="js/main.js"></script>
 	</body>
 </html>

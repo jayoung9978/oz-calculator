@@ -26,10 +26,3 @@ body {
 .result-alert {
 	margin-top: 10px;
 }
-
-#history ul li {
-	cursor: pointer;
-}
-#calc-result {
-	display: none !important;
-}
